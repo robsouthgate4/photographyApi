@@ -6,7 +6,7 @@ var ProjectSchema = new mongoose.Schema({
   title: String,
   description: String,
   tags: [String],
-  created: String,
+  created: {type: Date, default: Date.now},
   userId: String
 });
 

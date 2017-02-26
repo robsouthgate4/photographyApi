@@ -30,8 +30,6 @@ exports.getUsers = function(req, res) {
 
 exports.authenticateUser = function(req, res) {
 
-  console.log(req.body);
-
   // find the user
   User.findOne({
     username: req.body.username
@@ -58,7 +56,8 @@ exports.authenticateUser = function(req, res) {
         res.json({
           success: true,
           message: 'Enjoy your token!',
-          token: token
+          token: token,
+          user: user.username
         });
       }
 
