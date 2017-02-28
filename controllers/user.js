@@ -57,7 +57,8 @@ exports.authenticateUser = function(req, res) {
           success: true,
           message: 'Enjoy your token!',
           token: token,
-          user: user.username
+          user: user.username,
+          admin: user.admin
         });
       }
 

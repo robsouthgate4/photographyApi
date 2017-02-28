@@ -1,6 +1,6 @@
 module.exports = {
 
     'secret': 'ilovescotchyscotch',
-    'database': 'mongodb://localhost:27017/photography'
+    'database': 'mongodb://rsouth90:chelsea90@ds119578.mlab.com:19578/photography_site'
 
 };
