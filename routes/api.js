@@ -1,5 +1,6 @@
 var express = require('express');
 var userController = require('../controllers/user');
+var projectController = require('../controllers/project');
 var authController = require('../controllers/auth');
 var app = require('../app');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
@@ -50,6 +51,9 @@ router.route('/users')
   .post(userController.postUsers)
   .get(userController.getUsers);
 
+router.route('/projects')
+  .post(projectController.postProjects)
+  .get(projectController.getProjects);
 
 
 module.exports = router;
