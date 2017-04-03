@@ -55,5 +55,8 @@ router.route('/projects')
   .post(projectController.postProjects)
   .get(projectController.getProjects);
 
+  router.route('/projects/:id')
+    .get(projectController.getActiveProject);
+
 
 module.exports = router;

@@ -26,3 +26,13 @@ exports.getProjects = function(req, res) {
       res.json(projects);
   });
 };
+
+exports.getActiveProject = function(req, res) {
+  var routeId = req.params.id;
+  Project.findOne({ id: routeId }, function(err, project) {
+    console.log(project);
+    if (err)
+      res.send(err);
+      res.json(project);
+  });
+};

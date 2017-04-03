@@ -6,7 +6,7 @@ var ProjectSchema = new mongoose.Schema({
   code: String,
   caption: String,
   likes: Number,
-  id: String,
+  _id: String,
   display_src: String
 });
 
