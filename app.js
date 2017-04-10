@@ -10,6 +10,7 @@ var router = express.Router();
 var config = require('./config'); // get our config file
 var cors = require('cors');
 
+
 // Connect to the photography MongoDB
 mongoose.connect(config.database);
 

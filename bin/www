@@ -7,6 +7,8 @@
 var app = require('../app');
 var debug = require('debug')('photographyapi:server');
 var http = require('http');
+var socket_io = require('socket.io');
+var io = socket_io();
 
 /**
  * Get port from environment and store in Express.
@@ -28,6 +30,17 @@ var server = http.createServer(app);
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
+io.attach(server);
+
+io.on('connection', function(socket){
+  console.log("Socket connected: " + socket.id);
+  socket.on('action', (action) => {
+    if(action.type === 'server/hello'){
+      console.log('Got hello data!', action.data);
+      socket.emit('action', {type:'message', data:'good day!'});
+    }
+  });
+});
 
 /**
  * Normalize a port into a number, string, or false.
