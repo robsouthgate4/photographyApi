@@ -39,6 +39,7 @@ app.use(require('node-sass-middleware')({
   sourceMap: true
 }));
 
+app.use('/static', express.static(path.join(__dirname, 'files')))
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Use the passport package in our application

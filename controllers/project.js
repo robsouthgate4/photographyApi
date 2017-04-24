@@ -1,22 +1,25 @@
 // Load required packages
 var Project = require('../models/project');
 var app = require('../app');
+var path = require('path');
 
-// Create endpoint /api/users for POST
 exports.postProjects = function(req, res) {
 
-  //TODO: add post functionality
+  const file = req.file;
+  const meta = req.body;
 
-  // var user = new User({
-  //   username: req.body.username,
-  //   password: req.body.password
-  // });
-  //
-  // user.save(function(err) {
-  //   if (err) res.send(err);
-  //
-  //   res.json({ message: 'A new photographer has been added to the site!' });
-  // });
+  var project = new Project({
+    code: 'test',
+    caption: meta.caption,
+    likes: 0,
+    display_src: 'http://' + req.headers.host + '/static/' + file.originalname, //TODO: this is wrong, update to proper url
+    tags: req.body.tags.split(',')
+  });
+
+  project.save(function(err) {
+    if (err) throw err;
+    res.json(project);
+  });
 };
 
 exports.getProjects = function(req, res) {
@@ -27,10 +30,21 @@ exports.getProjects = function(req, res) {
   });
 };
 
+exports.removeProject = function(req, res) {
+  var projectId = req.params.id;
+  Project.remove({ _id: projectId }, function(err) {
+      if (!err) {
+          res.send('Removed project:' + ' ' + projectId);
+      }
+      else {
+          throw err;
+      }
+  });
+};
+
 exports.getActiveProject = function(req, res) {
   var routeId = req.params.id;
-  Project.findOne({ id: routeId }, function(err, project) {
-    console.log(project);
+  Project.findOne({ _id: routeId }, function(err, project) {
     if (err)
       res.send(err);
       res.json(project);

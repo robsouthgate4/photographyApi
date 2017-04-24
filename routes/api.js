@@ -5,41 +5,19 @@ var authController = require('../controllers/auth');
 var app = require('../app');
 var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var router = express.Router();
+var multer = module.exports = require('multer');
+
+const storage = module.exports = multer.diskStorage({
+  destination: './files',
+  filename(req, file, cb) {
+    cb(null, file.originalname);
+  },
+});
+
+const upload = module.exports = multer({ storage });
 
 router.route('/authenticate')
   .post(userController.authenticateUser);
-
-// router.use(function(req, res, next) {
-//
-//   // check header or url parameters or post parameters for token
-//   var token = req.body.token || req.query.token || req.headers['x-access-token'];
-//
-//   // decode token
-//   if (token) {
-//
-//     // verifies secret and checks exp
-//     jwt.verify(token, app.get('superSecret'), function(err, decoded) {
-//       if (err) {
-//         return res.json({ success: false, message: 'Failed to authenticate token.' });
-//       } else {
-//         // if everything is good, save to request for use in other routes
-//         req.decoded = decoded;
-//         next();
-//       }
-//     });
-//
-//   } else {
-//
-//     // if there is no token
-//     // return an error
-//     return res.status(403).send({
-//         success: false,
-//         message: 'No token provided.'
-//     });
-//
-//   }
-// });
-
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -52,11 +30,13 @@ router.route('/users')
   .get(userController.getUsers);
 
 router.route('/projects')
-  .post(projectController.postProjects)
-  .get(projectController.getProjects);
+  .post(upload.single('file'), projectController.postProjects)
+  .get(projectController.getProjects)
+
 
   router.route('/projects/:id')
-    .get(projectController.getActiveProject);
+    .get(projectController.getActiveProject)
+    .delete(projectController.removeProject);
 
 
 module.exports = router;
