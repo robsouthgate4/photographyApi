@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "cors": "^2.8.1",
+    "node-slack": "0.0.7",
     "react-router": "^3.0.2"
   }
 }

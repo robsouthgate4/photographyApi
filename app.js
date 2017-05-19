@@ -10,6 +10,16 @@ var router = express.Router();
 var config = require('./config'); // get our config file
 var cors = require('cors');
 
+var Slack = require('node-slack');
+var hook_url = 'https://hooks.slack.com/services/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';
+
+var slack = new Slack(hook_url);
+// send a test Slack message
+slack.send({
+ text: ':rocket: Nice job, I\'m all set up!',
+ channel: '#royal_canin_quiz',
+ username: 'MyApp Bot'
+});
 
 // Connect to the photography MongoDB
 mongoose.connect(config.database);
